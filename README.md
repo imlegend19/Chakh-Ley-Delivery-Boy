@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # chakhle_delivery_boy
 
 A new Flutter application.
@@ -14,3 +15,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# ChakhLe-Delivery-Boy
+Official app for chakhle delivery boys.
+>>>>>>> aeef1ce2c640b9bca857a9fbf615d2cbc0e99ad3
