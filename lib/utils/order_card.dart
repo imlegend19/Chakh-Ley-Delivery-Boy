@@ -8,8 +8,8 @@ Widget orderCard(BuildContext context, Order order) {
   return Card(
     child: InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ViewDetails()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ViewDetails(order: order)));
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -110,14 +110,14 @@ Widget orderCard(BuildContext context, Order order) {
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
-                    order.paymentDone ? "Paid" : "Unpaid",
+                    (order.paymentDone == false) ? "Unpaid" : "Paid",
                     style: TextStyle(
                       fontFamily: 'Avenir-Bold',
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500,
-                      color: order.paymentDone
-                          ? Colors.green.shade500
-                          : Colors.red,
+                      color: (order.paymentDone == false)
+                          ? Colors.red
+                          : Colors.green.shade500,
                     ),
                   ),
                 ),
@@ -150,19 +150,16 @@ Widget orderCard(BuildContext context, Order order) {
                       padding: const EdgeInsets.only(right: 5.0),
                       child: RaisedButton(
                         color: Colors.deepPurpleAccent,
-                        onPressed: () {},
+                        disabledColor:
+                        (ConstantVariables.order.indexOf(order.status) == 4)
+                            ? Colors.green
+                            : Colors.redAccent,
+                        onPressed: () {
+                          checkStatusOnPressed(order);
+                        },
                         child: Text(
-                          ConstantVariables.order.indexOf(ConstantVariables
-                                      .orderCode[order.status]) ==
-                                  6
-                              ? 'Completed'
-                              : 'Next: ' + ConstantVariables.order[ConstantVariables.order
-                                      .indexOf(ConstantVariables
-                                          .orderCode[order.status]) + 1],
-                          style: TextStyle(
-                              fontFamily: 'Avenir',
-                              fontSize: 14.0,
-                              color: Colors.white),
+                          checkStatusText(order),
+                          style: TextStyle(color: Colors.white),
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -173,9 +170,26 @@ Widget orderCard(BuildContext context, Order order) {
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     ),
   );
+}
+
+String checkStatusText(Order order) {
+  if (ConstantVariables.order.indexOf(order.status) == 4) {
+    return 'Completed';
+  } else if (ConstantVariables.order.indexOf(order.status) == 5) {
+    return 'Cancelled';
+  } else {
+    return '${ConstantVariables.order[ConstantVariables.order.indexOf(order.status) + 1]}';
+  }
+}
+
+void checkStatusOnPressed(Order order) {
+  patchOrder(
+      order.id,
+      ConstantVariables.orderCode[ConstantVariables
+          .order[ConstantVariables.order.indexOf(order.status) + 1]]);
 }

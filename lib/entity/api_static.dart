@@ -61,6 +61,11 @@ abstract class ProductStatic {
   static const keyPrice = "price";
   static const keyProductCount = "product_count";
   static const keyRestaurant = "restaurant";
+  static const keyDisplayPrice = "display_price";
+  static const keyRecommendedProduct = "recommended_product";
+  static const keyActive = "active";
+  static const keyDiscount = "discount";
+  static const keyInflation = "inflation";
 }
 
 abstract class RestaurantStatic {
@@ -101,6 +106,8 @@ abstract class RestaurantStatic {
   static const keyLatitude = "latitude";
   static const keyLongitude = "longitude";
   static const keyImages = "images";
+  static const keyCuisines = "cuisines";
+  static var keyCommission = "commission";
 }
 
 abstract class UserStatic {
@@ -131,6 +138,7 @@ abstract class SuborderSetStatic {
 
 abstract class OrderStatic {
   static const keyOrderListURL = APIStatic.baseURL + "order/list/?status=";
+  static const keyDeliveryBoyAddUrL = "&delivery_boy=";
   static const keyOrderDetailURL = APIStatic.baseURL + "order/";
 
   static const keyPreparationTime = "preparation_time";
@@ -140,4 +148,19 @@ abstract class OrderStatic {
   static const keyTotal = "total";
   static const keyOrderDate = "order_date";
   static const keyStatus = "status";
+  static const keyDeliveryBoy = "delivery_boy";
+  static const keyHasDeliveryBoy = "has_delivery_boy";
+}
+
+abstract class TransactionStatic {
+  static const transactionURL = APIStatic.baseURL + "transactions/list/?order=";
+  static const transactionCreateURL =
+      APIStatic.baseURL + "transactions/create/";
+
+  static const keyOrder = "order";
+  static const keyAmount = "amount";
+  static const keyIsCredit = "is_credit";
+  static const keyPaymentType = "payment_type";
+  static const keyPaymentMode = "payment_mode";
+  static const keyAcceptedBy = "accepted_by";
 }

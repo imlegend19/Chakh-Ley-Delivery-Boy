@@ -1,5 +1,14 @@
-import 'package:chakhle_delivery_boy/fragments/order_station.dart';
+import 'dart:async';
+
+
+import 'package:chakhle_delivery_boy/static_variables/no_internet.dart';
+import 'package:chakhle_delivery_boy/static_variables/static_variables.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+
+import 'fragments/order_station.dart';
+import 'models/user_pref.dart';
+
 
 class DrawerItem {
   String title;
@@ -9,9 +18,8 @@ class DrawerItem {
 
 class HomePage extends StatefulWidget {
   final drawerItems = [
-    DrawerItem("Order Station", Icons.local_dining),
-    DrawerItem("Fragment 2", Icons.local_pizza),
-    DrawerItem("Fragment 3", Icons.info)
+    DrawerItem("Delivery Boys", Icons.motorcycle),
+    DrawerItem("Logout", Icons.power_settings_new)
   ];
 
   @override
@@ -20,20 +28,37 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedDrawerIndex = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  Connectivity connectivity;
+  StreamSubscription<ConnectivityResult> subscription;
+
+  @override
+  void initState() {
+    super.initState();
+
+    connectivity = Connectivity();
+    subscription =
+        connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
+      ConstantVariables.connectionStatus = result;
+      if (result == ConnectivityResult.none) {
+        setState(() {});
+      } else if ((result == ConnectivityResult.mobile) ||
+          (result == ConnectivityResult.wifi)) {
+        setState(() {
+        });
+      }
+    });
+  }
 
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
         return OrderStation();
       case 1:
-        return Container(
-          child: Text('Fragment 2'),
-        );
-      case 2:
-        return Container(
-          child: Text('Fragment 3'),
-        );
-
+        logoutUser().then((val) {
+          Navigator.pushReplacementNamed(context, '/loginpage');
+        });
+        break;
       default:
         return Text("Error");
     }
@@ -45,10 +70,30 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var drawerOptions = <Widget>[];
     for (var i = 0; i < widget.drawerItems.length; i++) {
       var d = widget.drawerItems[i];
+      if (d.title == "Logout") {
+        drawerOptions.add(
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+            child: Container(
+              width: 200,
+              child: Divider(
+                color: Colors.grey,
+                height: 2.0,
+              ),
+            ),
+          ),
+        );
+      }
       drawerOptions.add(ListTile(
         leading: Icon(d.icon),
         title: Text(d.title),
@@ -58,20 +103,38 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(widget.drawerItems[_selectedDrawerIndex].title),
+        title: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+                icon: Icon(Icons.dehaze),
+                onPressed: () => _scaffoldKey.currentState.openDrawer()),
+            Text(widget.drawerItems[_selectedDrawerIndex].title),
+          ],
+        ),
+        titleSpacing: 1,
+        automaticallyImplyLeading: false,
       ),
       drawer: Drawer(
         child: Column(
           children: <Widget>[
             UserAccountsDrawerHeader(
-                accountName: Text("Mahen Gandhi"),
-                accountEmail: Text('mahengandhi19@gmail.com')),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.grey[200],
+                ),
+                accountName: Text(ConstantVariables.user['name']),
+                accountEmail: Text(ConstantVariables.user['email'])),
             Column(children: drawerOptions)
           ],
         ),
       ),
-      body: _getDrawerItemWidget(_selectedDrawerIndex),
+      body: ConstantVariables.connectionStatus == ConnectivityResult.none
+          ? buildNoInternet(context)
+          : _getDrawerItemWidget(_selectedDrawerIndex),
     );
   }
 }

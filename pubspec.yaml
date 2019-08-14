@@ -23,6 +23,12 @@ dependencies:
   cupertino_icons: ^0.1.2
   http:
   url_launcher:
+  fluttertoast: ^3.0.1
+  dropdown_formfield: ^0.1.0
+  connectivity:
+  shared_preferences:
+  pin_code_text_field:
+  rounded_modal:
 
 dev_dependencies:
   flutter_test:
