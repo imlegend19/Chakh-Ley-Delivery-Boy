@@ -15,20 +15,19 @@ class _OrderStationState extends State<OrderStation> {
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 0,
-          actions: <Widget>[],
           title: TabBar(
             tabs: [
               Tab(text: "Ongoing"),
               Tab(text: 'Delivered'),
             ],
             indicatorColor: Colors.white,
-            isScrollable: true,
           ),
+          automaticallyImplyLeading: false,
         ),
         body: TabBarView(
           children: [
-            OrderPage(status: "O"),
-            OrderPage(status:'D'),
+            OrderPage(status: "O",deliveryBoy: 2,),
+            OrderPage(status: 'D',deliveryBoy: 2,),
           ],
         ),
       ),

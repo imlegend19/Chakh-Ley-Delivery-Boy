@@ -176,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
     createPost(post).then((response) {
       if (response.statusCode == 201) {
         print(response.body);
-        showOTPBottomSheet(context, _phnController.text, true);
+        showOTPBottomSheet(context, _phnController.text);
         Fluttertoast.showToast(
           msg: "OTP has been sent to your registered email.",
           fontSize: 13.0,

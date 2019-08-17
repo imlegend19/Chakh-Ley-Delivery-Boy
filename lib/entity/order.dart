@@ -74,8 +74,11 @@ class GetOrders {
   }
 }
 
-Future<GetOrders> fetchOrder(String status) async {
-  final response = await http.get(OrderStatic.keyOrderListURL + status);
+Future<GetOrders> fetchOrderDeliveryBoy(String status, int deliveryBoy) async {
+  final response = await http.get(OrderStatic.keyOrderListURL +
+      status +
+      OrderStatic.keyDeliveryBoyAddUrL +
+      '$deliveryBoy');
 
   if (response.statusCode == 200) {
     int count = jsonDecode(response.body)[APIStatic.keyCount];

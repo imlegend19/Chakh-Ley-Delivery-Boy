@@ -11,8 +11,9 @@ class OrderPage extends StatefulWidget {
   _OrderPageState createState() => _OrderPageState();
 
   final String status;
+  final int deliveryBoy;
 
-  OrderPage({@required this.status});
+  OrderPage({@required this.status,@required this.deliveryBoy});
 }
 
 class _OrderPageState extends State<OrderPage> {
@@ -20,7 +21,7 @@ class _OrderPageState extends State<OrderPage> {
   StreamController _orderController;
 
   loadOrders() async {
-    fetchOrder(widget.status).then((res) async {
+    fetchOrderDeliveryBoy(widget.status,widget.deliveryBoy).then((res) async {
       _orderController.add(res);
       return res;
     });

@@ -14,11 +14,11 @@ import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:rounded_modal/rounded_modal.dart';
 
 void showOTPBottomSheet(
-    BuildContext context, String destination, bool decider) {
+    BuildContext context, String destination) {
   showRoundedModalBottomSheet(
     context: context,
     builder: (BuildContext bc) {
-      return OTPBottomSheet(destination, decider);
+      return OTPBottomSheet(destination);
     },
     dismissOnTap: false,
   );
@@ -29,11 +29,10 @@ class OTPBottomSheet extends StatefulWidget {
   _OTPBottomSheetState createState() => _OTPBottomSheetState();
 
   final String destination;
-  final bool decider;
 
   static String name, email, phone;
 
-  OTPBottomSheet(this.destination, this.decider);
+  OTPBottomSheet(this.destination);
 }
 
 class _OTPBottomSheetState extends State<OTPBottomSheet> {
@@ -91,10 +90,7 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
                 autofocus: false,
                 maxLength: 5,
                 onDone: (pin) {
-                  widget.decider
-                      ? verifyOTP(pin)
-                      : verifyRegisterOTP(pin, OTPBottomSheet.name,
-                          OTPBottomSheet.email, OTPBottomSheet.phone);
+                      verifyOTP(pin);
                 },
                 pinBoxHeight: 50.0,
                 pinBoxWidth: 50.0,
@@ -125,22 +121,7 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
     return response;
   }
 
-  Future<http.Response> createRegisterOTPPost(UserOTPPost post) async {
-    final response = await http.post(UserStatic.keyOTPRegURL,
-        headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-        body: postUserOTPToJson(post));
 
-    return response;
-  }
-
-  void verifyRegisterOTP(String pin, String name, String email, String phone) {
-    UserOTPPost post =
-        UserOTPPost(name: name, email: email, mobile: phone, verifyOTP: pin);
-
-    createRegisterOTPPost(post).then((response) {
-      validate(response);
-    });
-  }
 
   void verifyOTP(String pin) {
     VerifyLoginOTPPost post = VerifyLoginOTPPost(
@@ -157,8 +138,6 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
     ConstantVariables.user['name'] = name;
     ConstantVariables.user['id'] = "$id";
     ConstantVariables.userLoggedIn = true;
-
-    print(ConstantVariables.user);
 
     saveUser(id, name, email, mobile);
     loginUser();

@@ -8,12 +8,13 @@ class LoginPost {
 
   factory LoginPost.fromJson(Map<String, dynamic> json) => LoginPost(
         destination: json["destination"],
-        isLogin: json["is_login"],
+        isLogin: json["is_login"]
       );
 
   Map<String, dynamic> toJson() => {
         "destination": destination,
         "is_login": isLogin,
+        "is_delivery_boy": true,
       };
 }
 
@@ -38,6 +39,7 @@ class VerifyLoginOTPPost {
   Map<String, dynamic> toJson() => {
         "destination": destination,
         "is_login": isLogin,
+        "is_delivery_boy": true,
         "verify_otp": verifyOTP
       };
 }
