@@ -12,7 +12,6 @@ import 'package:http/http.dart' as http;
 import 'entity/api_static.dart';
 import 'models/user_post.dart';
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -45,6 +44,9 @@ class _LoginPageState extends State<LoginPage> {
   TextStyle style = TextStyle(fontFamily: 'Avenir - Bold', fontSize: 15.0);
   TextEditingController _phnController = TextEditingController();
   bool loggedIn = true;
+  bool _phnEnabled = true;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -67,8 +69,20 @@ class _LoginPageState extends State<LoginPage> {
     _phnController.addListener(getButtonText);
   }
 
+  void _showOTPBottomSheet(
+      GlobalKey<ScaffoldState> scaffoldKey, String destination) {
+    scaffoldKey.currentState
+        .showBottomSheet<void>((BuildContext context) {
+          return OTPBottomSheet(
+            destination
+          );
+        })
+        .closed
+        .whenComplete(() {});
+  }
+
   void getButtonText() {
-    if (_phnController.text.length != 10) {
+    if (_phnController.text.trim().length != 10) {
       setState(() {
         buttonText = "ENTER VALID MOBILE";
         enableLogin = false;
@@ -87,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
       style: style,
       controller: _phnController,
       keyboardType: TextInputType.number,
+      enabled: _phnEnabled,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
         hintText: "Mobile Number",
@@ -99,12 +114,16 @@ class _LoginPageState extends State<LoginPage> {
     final loginButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Colors.redAccent,
+      color: enableLogin ? Colors.red : Colors.redAccent.shade100,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: enableLogin
             ? () {
+                setState(() {
+                  enableLogin = false;
+                  _phnEnabled = false;
+                });
                 loginUserPost();
               }
             : null,
@@ -121,6 +140,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
+      key: _scaffoldKey,
       body: loggedIn
           ? Container()
           : SingleChildScrollView(
@@ -175,10 +195,10 @@ class _LoginPageState extends State<LoginPage> {
     // ignore: missing_return
     createPost(post).then((response) {
       if (response.statusCode == 201) {
-        print(response.body);
-        showOTPBottomSheet(context, _phnController.text);
+        // print(response.body);
+        _showOTPBottomSheet(_scaffoldKey, _phnController.text.trim());
         Fluttertoast.showToast(
-          msg: "OTP has been sent to your registered email.",
+          msg: "OTP has been sent to your registered mobile number.",
           fontSize: 13.0,
           toastLength: Toast.LENGTH_LONG,
           timeInSecForIos: 2,
@@ -194,11 +214,20 @@ class _LoginPageState extends State<LoginPage> {
           toastLength: Toast.LENGTH_LONG,
           timeInSecForIos: 2,
         );
-      } else if (response.statusCode == 400) {
-        print(response.statusCode);
+      } else if (response.statusCode >= 400) {
+        Fluttertoast.showToast(
+          msg: "You are not a valid delivery boy!",
+          fontSize: 13.0,
+          toastLength: Toast.LENGTH_LONG,
+          timeInSecForIos: 2,
+        );
       } else {
-        print(response.statusCode);
+        // print(response.statusCode);
       }
+
+      setState(() {
+        _phnEnabled = true;
+      });
     }).catchError((error) {
       print('error : $error');
     });

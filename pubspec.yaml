@@ -43,6 +43,7 @@ flutter:
     - assets/non_veg.png
     - assets/not_found.png
     - assets/veg.png
+    - assets/error.png
 
   fonts:
     - family: Avenir

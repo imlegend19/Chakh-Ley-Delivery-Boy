@@ -1,7 +1,6 @@
 import 'dart:convert' as JSON;
 import 'dart:io';
 
-
 import 'package:chakhle_delivery_boy/entity/api_static.dart';
 import 'package:chakhle_delivery_boy/models/user_post.dart';
 import 'package:chakhle_delivery_boy/models/user_pref.dart';
@@ -11,18 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:pin_code_text_field/pin_code_text_field.dart';
-import 'package:rounded_modal/rounded_modal.dart';
-
-void showOTPBottomSheet(
-    BuildContext context, String destination) {
-  showRoundedModalBottomSheet(
-    context: context,
-    builder: (BuildContext bc) {
-      return OTPBottomSheet(destination);
-    },
-    dismissOnTap: false,
-  );
-}
 
 class OTPBottomSheet extends StatefulWidget {
   @override
@@ -30,7 +17,7 @@ class OTPBottomSheet extends StatefulWidget {
 
   final String destination;
 
-  static String name, email, phone;
+  static String name, phone;
 
   OTPBottomSheet(this.destination);
 }
@@ -70,7 +57,7 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0),
                   child: Text(
-                    'OTP has been sent to your email.',
+                    'OTP has been sent to your registered mobile number.',
                     style: TextStyle(
                       fontFamily: 'Avenir-Bold',
                       fontSize: 13.0,
@@ -90,7 +77,7 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
                 autofocus: false,
                 maxLength: 5,
                 onDone: (pin) {
-                      verifyOTP(pin);
+                  verifyOTP(pin);
                 },
                 pinBoxHeight: 50.0,
                 pinBoxWidth: 50.0,
@@ -121,8 +108,6 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
     return response;
   }
 
-
-
   void verifyOTP(String pin) {
     VerifyLoginOTPPost post = VerifyLoginOTPPost(
         destination: widget.destination, isLogin: "true", verifyOTP: pin);
@@ -132,14 +117,13 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
     });
   }
 
-  void saveUserCredentials(int id, String email, String mobile, String name) {
-    ConstantVariables.user['email'] = email;
+  void saveUserCredentials(int id, String mobile, String name) {
     ConstantVariables.user['mobile'] = mobile;
     ConstantVariables.user['name'] = name;
     ConstantVariables.user['id'] = "$id";
     ConstantVariables.userLoggedIn = true;
 
-    saveUser(id, name, email, mobile);
+    saveUser(id, name, mobile);
     loginUser();
   }
 
@@ -172,26 +156,26 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
       var json = JSON.jsonDecode(response.body);
       assert(json is Map);
       String token = json["token"];
+      print(token);
       var decodedObject = parseJwt(token);
-      if (decodedObject["is_admin"]) {
-        Fluttertoast.showToast(
-          msg: "Logged In Successfully !!!",
-          fontSize: 13.0,
-          toastLength: Toast.LENGTH_LONG,
-          timeInSecForIos: 2,
-        );
-        saveUserCredentials(decodedObject['user_id'], decodedObject['email'],
-            decodedObject['mobile'], decodedObject['name']);
-        Navigator.popAndPushNamed(context, '/homepage');
-      } else {
-        Fluttertoast.showToast(
-          msg: "You are not a valid business owner!",
-          fontSize: 13.0,
-          toastLength: Toast.LENGTH_LONG,
-          timeInSecForIos: 2,
-        );
-        Navigator.pop(context);
-      }
+      Fluttertoast.showToast(
+        msg: "Logged In Successfully !!!",
+        fontSize: 13.0,
+        toastLength: Toast.LENGTH_LONG,
+        timeInSecForIos: 2,
+      );
+      saveUserCredentials(decodedObject['user_id'], decodedObject['mobile'],
+          decodedObject['name']);
+      Navigator.popAndPushNamed(context, '/homepage');
+    } else {
+      var json = JSON.jsonDecode(response.body);
+      assert(json is Map);
+      Fluttertoast.showToast(
+        msg: json['detail'],
+        fontSize: 13.0,
+        toastLength: Toast.LENGTH_LONG,
+        timeInSecForIos: 2,
+      );
     }
   }
 }

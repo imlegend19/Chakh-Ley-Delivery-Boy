@@ -4,11 +4,10 @@ import 'package:chakhle_delivery_boy/static_variables/static_variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-Future<void> saveUser(int id, String name, String email, String mobile) async {
+Future<void> saveUser(int id, String name, String mobile) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setInt("id", id);
   prefs.setString("name", name);
-  prefs.setString("email", email);
   prefs.setString("mobile", mobile);
 }
 
@@ -17,7 +16,6 @@ Future<Map> getDetails() async {
   Map<String, String> details = Map();
   details["id"] = "${prefs.getInt("id")}";
   details["name"] = prefs.getString("name");
-  details["email"] = prefs.getString("email");
   details["mobile"] = prefs.getString("mobile");
   return details;
 }

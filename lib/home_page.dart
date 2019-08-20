@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 import 'package:chakhle_delivery_boy/static_variables/no_internet.dart';
 import 'package:chakhle_delivery_boy/static_variables/static_variables.dart';
 import 'package:connectivity/connectivity.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/material.dart';
 
 import 'fragments/order_station.dart';
 import 'models/user_pref.dart';
-
 
 class DrawerItem {
   String title;
@@ -44,8 +42,7 @@ class _HomePageState extends State<HomePage> {
         setState(() {});
       } else if ((result == ConnectivityResult.mobile) ||
           (result == ConnectivityResult.wifi)) {
-        setState(() {
-        });
+        setState(() {});
       }
     });
   }
@@ -127,7 +124,9 @@ class _HomePageState extends State<HomePage> {
                   backgroundColor: Colors.grey[200],
                 ),
                 accountName: Text(ConstantVariables.user['name']),
-                accountEmail: Text(ConstantVariables.user['email'])),
+                accountEmail: ConstantVariables.user['email'] == null
+                    ? Text("-- no email provided --")
+                    : Text(ConstantVariables.user['email'])),
             Column(children: drawerOptions)
           ],
         ),

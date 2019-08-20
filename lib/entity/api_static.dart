@@ -50,6 +50,7 @@ abstract class EmployeeStatic {
   static const keyJoinedOn = "joined_on";
   static const keyLeftOn = "left_on";
   static const keySalary = "salary";
+  static const keyUser = "user";
 }
 
 abstract class ProductStatic {
@@ -138,7 +139,7 @@ abstract class SuborderSetStatic {
 
 abstract class OrderStatic {
   static const keyOrderListURL = APIStatic.baseURL + "order/list/?status=";
-  static const keyDeliveryBoyAddUrL = "&delivery_boy=";
+  static const keyDeliveryBoyUserAddUrL = "&delivery_boy__user__id=";
   static const keyOrderDetailURL = APIStatic.baseURL + "order/";
 
   static const keyPreparationTime = "preparation_time";

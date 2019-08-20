@@ -75,31 +75,37 @@ class GetOrders {
 }
 
 Future<GetOrders> fetchOrderDeliveryBoy(String status, int deliveryBoy) async {
-  final response = await http.get(OrderStatic.keyOrderListURL +
-      status +
-      OrderStatic.keyDeliveryBoyAddUrL +
-      '$deliveryBoy');
+  try{
+    final response = await http.get(OrderStatic.keyOrderListURL +
+        status +
+        OrderStatic.keyDeliveryBoyUserAddUrL +
+        '$deliveryBoy');
 
-  if (response.statusCode == 200) {
-    int count = jsonDecode(response.body)[APIStatic.keyCount];
-    int execute = count ~/ 10 + 1;
+    if (response.statusCode == 200) {
+      int count = jsonDecode(response.body)[APIStatic.keyCount];
+      int execute = count ~/ 10 + 1;
 
-    GetOrders order = GetOrders.fromJson(jsonDecode(response.body));
-    execute--;
-
-    while (execute != 0) {
-      GetOrders tempOrder = GetOrders.fromJson(jsonDecode(
-          (await http.get(jsonDecode(response.body)[APIStatic.keyNext])).body));
-      order.orders += tempOrder.orders;
-      order.count += tempOrder.count;
+      GetOrders order = GetOrders.fromJson(jsonDecode(response.body));
       execute--;
-    }
 
-    return order;
-  } else {
-    print(response.body);
-    throw Exception('Failed to load get');
+      while (execute != 0) {
+        GetOrders tempOrder = GetOrders.fromJson(jsonDecode(
+            (await http.get(jsonDecode(response.body)[APIStatic.keyNext])).body));
+        order.orders += tempOrder.orders;
+        order.count += tempOrder.count;
+        execute--;
+      }
+
+      return order;
+    } else {
+      print(response.body);
+      return null;
+    }
+  }catch(e){
+    print(e);
+    return null;
   }
+
 }
 
 patchOrder(int id, String status) async {
@@ -134,4 +140,3 @@ patchOrder(int id, String status) async {
     );
   }
 }
-
