@@ -60,12 +60,13 @@ class _OrderPageState extends State<OrderPage> {
                 );
               }
             } else {
-              return Container(
-                child: Center(child: ColorLoader()),
-              );
+              return getErrorWidget(context);
+
             }
           }else{
-            return getErrorWidget(context);
+            return Container(
+              child: Center(child: ColorLoader()),
+            );
           }
         },
       ),
