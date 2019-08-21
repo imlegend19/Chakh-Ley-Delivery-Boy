@@ -29,10 +29,17 @@ dependencies:
   shared_preferences:
   pin_code_text_field:
   rounded_modal:
+  flutter_launcher_icons:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  image_path: "assets/logo.png"
+  android: true
+  ios: true
+
 
 flutter:
   uses-material-design: true
@@ -44,6 +51,7 @@ flutter:
     - assets/not_found.png
     - assets/veg.png
     - assets/error.png
+    - assets/banner.png
 
   fonts:
     - family: Avenir
