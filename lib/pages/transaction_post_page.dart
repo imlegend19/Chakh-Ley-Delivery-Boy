@@ -211,10 +211,6 @@ class _TransactionPostPageState extends State<TransactionPostPage> {
 
     createPost(post).then((response) async {
       if (response.statusCode == 201) {
-        patchOrder(
-            widget.order.id,
-            ConstantVariables.orderCode[ConstantVariables.order[
-                ConstantVariables.order.indexOf(widget.order.status) + 1]]);
         Fluttertoast.showToast(
           msg: "Transaction Completed",
           fontSize: 13.0,
