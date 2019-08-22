@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:chakhle_delivery_boy/static_variables/static_variables.dart';
+import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 Future<void> saveUser(int id, String name, String mobile) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -1,11 +1,11 @@
 import 'dart:convert' as JSON;
 import 'dart:io';
 
-import 'package:chakhle_delivery_boy/entity/api_static.dart';
-import 'package:chakhle_delivery_boy/models/user_post.dart';
-import 'package:chakhle_delivery_boy/models/user_pref.dart';
-import 'package:chakhle_delivery_boy/static_variables/static_variables.dart';
-import 'package:chakhle_delivery_boy/utils/parse_jwt.dart';
+import 'package:chakh_ley_delivery_boy/entity/api_static.dart';
+import 'package:chakh_ley_delivery_boy/models/user_post.dart';
+import 'package:chakh_ley_delivery_boy/models/user_pref.dart';
+import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
+import 'package:chakh_ley_delivery_boy/utils/parse_jwt.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -141,11 +141,19 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
   /// }
   ///
 
-  void validate(http.Response response) {
+  void validate(http.Response response) async {
     if (response.statusCode == 403) {
-      // OTP validation failed
       var json = JSON.jsonDecode(response.body);
       assert(json is Map);
+
+      await ConstantVariables.sentryClient.captureException(
+        exception: Exception("Order Patch Error"),
+        stackTrace:
+            '[object: ${json['detail']}, response.body: ${response.body}, '
+            'response.headers: ${response.headers}, response: $response,'
+            'status code: ${response.statusCode}]',
+      );
+
       Fluttertoast.showToast(
         msg: json['detail'],
         fontSize: 13.0,
@@ -155,21 +163,33 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
     } else if (response.statusCode == 202) {
       var json = JSON.jsonDecode(response.body);
       assert(json is Map);
+
       String token = json["token"];
       print(token);
       var decodedObject = parseJwt(token);
+
       Fluttertoast.showToast(
         msg: "Logged In Successfully !!!",
         fontSize: 13.0,
         toastLength: Toast.LENGTH_LONG,
         timeInSecForIos: 2,
       );
+
       saveUserCredentials(decodedObject['user_id'], decodedObject['mobile'],
           decodedObject['name']);
       Navigator.popAndPushNamed(context, '/homepage');
     } else {
       var json = JSON.jsonDecode(response.body);
       assert(json is Map);
+
+      await ConstantVariables.sentryClient.captureException(
+        exception: Exception("Order Patch Error"),
+        stackTrace:
+            '[object: ${json['detail']}, response.body: ${response.body}, '
+            'response.headers: ${response.headers}, response: $response,'
+            'status code: ${response.statusCode}]',
+      );
+
       Fluttertoast.showToast(
         msg: json['detail'],
         fontSize: 13.0,

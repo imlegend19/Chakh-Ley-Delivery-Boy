@@ -4,11 +4,14 @@ class LoginPost {
   String destination;
   String isLogin;
 
-  LoginPost({this.destination, this.isLogin});
+  LoginPost({
+    this.destination,
+    this.isLogin,
+  });
 
   factory LoginPost.fromJson(Map<String, dynamic> json) => LoginPost(
         destination: json["destination"],
-        isLogin: json["is_login"]
+        isLogin: json["is_login"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,15 +35,16 @@ class VerifyLoginOTPPost {
 
   factory VerifyLoginOTPPost.fromJson(Map<String, dynamic> json) =>
       VerifyLoginOTPPost(
-          destination: json["destination"],
-          isLogin: json["is_login"],
-          verifyOTP: json["verify_otp"]);
+        destination: json["destination"],
+        isLogin: json["is_login"],
+        verifyOTP: json["verify_otp"],
+      );
 
   Map<String, dynamic> toJson() => {
         "destination": destination,
         "is_login": isLogin,
         "is_delivery_boy": true,
-        "verify_otp": verifyOTP
+        "verify_otp": verifyOTP,
       };
 }
 
@@ -92,8 +96,12 @@ class UserOTPPost {
       mobile: json["mobile"],
       verifyOTP: json["verify_otp"]);
 
-  Map<String, dynamic> toJson() =>
-      {"name": name, "email": email, "mobile": mobile, "verify_otp": verifyOTP};
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "email": email,
+        "mobile": mobile,
+        "verify_otp": verifyOTP,
+      };
 }
 
 String postUserOTPToJson(UserOTPPost data) {

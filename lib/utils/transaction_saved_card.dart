@@ -1,6 +1,5 @@
-
-import 'package:chakhle_delivery_boy/entity/transaction.dart';
-import 'package:chakhle_delivery_boy/static_variables/static_variables.dart';
+import 'package:chakh_ley_delivery_boy/entity/transaction.dart';
+import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:flutter/material.dart';
 
 Widget transactionCard(BuildContext context, Transaction transaction) {
@@ -78,7 +77,8 @@ Widget transactionCard(BuildContext context, Transaction transaction) {
               ),
               children: <TextSpan>[
                 TextSpan(
-                  text: '${ConstantVariables.deliveryBoyList[transaction.acceptedBy]}',
+                  text:
+                      '${ConstantVariables.deliveryBoyList[transaction.acceptedBy]}',
                   style: TextStyle(
                     fontSize: 15.0,
                     fontFamily: 'Avenir-Black',

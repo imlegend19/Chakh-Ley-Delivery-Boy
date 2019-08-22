@@ -1,6 +1,5 @@
-import 'package:chakhle_delivery_boy/entity/order.dart';
-import 'package:chakhle_delivery_boy/pages/order_page.dart';
-import 'package:chakhle_delivery_boy/static_variables/static_variables.dart';
+import 'package:chakh_ley_delivery_boy/pages/order_page.dart';
+import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:flutter/material.dart';
 
 class OrderStation extends StatefulWidget {

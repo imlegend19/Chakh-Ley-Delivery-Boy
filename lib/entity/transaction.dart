@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:http/http.dart' as http;
 
 import 'api_static.dart';
@@ -76,6 +77,13 @@ Future<GetTransactions> fetchTransactions(String orderID) async {
 
     return transactions;
   } else {
-    throw Exception('Failed to load get');
+    await ConstantVariables.sentryClient.captureException(
+      exception: Exception("Transaction Fetch Failure"),
+      stackTrace: '[orderID: $orderID, response.body: ${response.body}, '
+          'response.headers: ${response.headers}, response: $response,'
+          'status code: ${response.statusCode}]',
+    );
+
+    return null;
   }
 }

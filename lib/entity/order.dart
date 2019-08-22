@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'api_static.dart';
@@ -75,7 +76,7 @@ class GetOrders {
 }
 
 Future<GetOrders> fetchOrderDeliveryBoy(String status, int deliveryBoy) async {
-  try{
+  try {
     final response = await http.get(OrderStatic.keyOrderListURL +
         status +
         OrderStatic.keyDeliveryBoyUserAddUrL +
@@ -90,7 +91,8 @@ Future<GetOrders> fetchOrderDeliveryBoy(String status, int deliveryBoy) async {
 
       while (execute != 0) {
         GetOrders tempOrder = GetOrders.fromJson(jsonDecode(
-            (await http.get(jsonDecode(response.body)[APIStatic.keyNext])).body));
+            (await http.get(jsonDecode(response.body)[APIStatic.keyNext]))
+                .body));
         order.orders += tempOrder.orders;
         order.count += tempOrder.count;
         execute--;
@@ -98,14 +100,24 @@ Future<GetOrders> fetchOrderDeliveryBoy(String status, int deliveryBoy) async {
 
       return order;
     } else {
-      print(response.body);
+      await ConstantVariables.sentryClient.captureException(
+        exception: Exception("Order Get Failure"),
+        stackTrace:
+            '[status: $status, deliveryBoy: $deliveryBoy, response.body: ${response.body}, '
+            'response.headers: ${response.headers}, response: $response,'
+            'status code: ${response.statusCode}]',
+      );
+
       return null;
     }
-  }catch(e){
-    print(e);
+  } catch (e) {
+    await ConstantVariables.sentryClient.captureException(
+      exception: Exception("Retrieve Order Error"),
+      stackTrace: e.toString(),
+    );
+
     return null;
   }
-
 }
 
 patchOrder(int id, String status) async {
@@ -121,21 +133,35 @@ patchOrder(int id, String status) async {
     Fluttertoast.showToast(
       msg: "Status Updated",
       fontSize: 13.0,
-      toastLength: Toast.LENGTH_LONG,
+      toastLength: Toast.LENGTH_SHORT,
       timeInSecForIos: 2,
     );
   } else if (response.statusCode == 503) {
+    await ConstantVariables.sentryClient.captureException(
+      exception: Exception("Order Patch Error"),
+      stackTrace: '[status: $status, id: $id, response.body: ${response.body}, '
+          'response.headers: ${response.headers}, response: $response,'
+          'status code: ${response.statusCode}]',
+    );
+
     Fluttertoast.showToast(
       msg: "Please check your internet!",
       fontSize: 13.0,
-      toastLength: Toast.LENGTH_LONG,
+      toastLength: Toast.LENGTH_SHORT,
       timeInSecForIos: 2,
     );
   } else {
+    await ConstantVariables.sentryClient.captureException(
+      exception: Exception("Order Patch Error"),
+      stackTrace: '[status: $status, id: $id, response.body: ${response.body}, '
+          'response.headers: ${response.headers}, response: $response,'
+          'status code: ${response.statusCode}]',
+    );
+
     Fluttertoast.showToast(
       msg: 'Error!!',
       fontSize: 13.0,
-      toastLength: Toast.LENGTH_LONG,
+      toastLength: Toast.LENGTH_SHORT,
       timeInSecForIos: 2,
     );
   }

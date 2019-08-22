@@ -1,4 +1,4 @@
-package in.chakhle.chakhle_delivery_boy;
+package in.co.chakhley.delivery_boy;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

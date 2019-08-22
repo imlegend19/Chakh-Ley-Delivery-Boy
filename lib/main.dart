@@ -1,16 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert' as JSON;
-
-import 'package:chakhle_delivery_boy/home_page.dart';
-import 'package:chakhle_delivery_boy/models/user_pref.dart';
-import 'package:chakhle_delivery_boy/pages/otp.dart';
-import 'package:chakhle_delivery_boy/static_variables/static_variables.dart';
+import 'package:chakh_ley_delivery_boy/home_page.dart';
+import 'package:chakh_ley_delivery_boy/models/user_pref.dart';
+import 'package:chakh_ley_delivery_boy/pages/otp.dart';
+import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:sentry/sentry.dart';
-
 import 'entity/api_static.dart';
 import 'models/user_post.dart';
 
@@ -33,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Chakh Le - Admin',
+      title: 'Chakh Le - Delivery Boy',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primarySwatch: Colors.red, appBarTheme: AppBarTheme(elevation: 0)),
@@ -88,9 +86,7 @@ class _LoginPageState extends State<LoginPage> {
       GlobalKey<ScaffoldState> scaffoldKey, String destination) {
     scaffoldKey.currentState
         .showBottomSheet<void>((BuildContext context) {
-          return OTPBottomSheet(
-            destination
-          );
+          return OTPBottomSheet(destination);
         })
         .closed
         .whenComplete(() {});

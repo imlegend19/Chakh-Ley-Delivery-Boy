@@ -1,6 +1,5 @@
-
-import 'package:chakhle_delivery_boy/entity/api_static.dart';
-import 'package:chakhle_delivery_boy/entity/order.dart';
+import 'package:chakh_ley_delivery_boy/entity/api_static.dart';
+import 'package:chakh_ley_delivery_boy/entity/order.dart';
 import 'package:flutter/material.dart';
 
 Widget subOrderCard(BuildContext context, Order order, int index) {

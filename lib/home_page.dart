@@ -1,10 +1,8 @@
 import 'dart:async';
-
-import 'package:chakhle_delivery_boy/static_variables/no_internet.dart';
-import 'package:chakhle_delivery_boy/static_variables/static_variables.dart';
+import 'package:chakh_ley_delivery_boy/static_variables/no_internet.dart';
+import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-
 import 'fragments/order_station.dart';
 import 'models/user_pref.dart';
 
@@ -16,7 +14,7 @@ class DrawerItem {
 
 class HomePage extends StatefulWidget {
   final drawerItems = [
-    DrawerItem("Delivery Boys", Icons.motorcycle),
+    DrawerItem("Delivery Boys", Icons.directions_bike),
     DrawerItem("Logout", Icons.power_settings_new)
   ];
 

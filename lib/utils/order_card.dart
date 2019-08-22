@@ -1,6 +1,6 @@
-import 'package:chakhle_delivery_boy/entity/order.dart';
-import 'package:chakhle_delivery_boy/fragments/view_details.dart';
-import 'package:chakhle_delivery_boy/static_variables/static_variables.dart';
+import 'package:chakh_ley_delivery_boy/entity/order.dart';
+import 'package:chakh_ley_delivery_boy/fragments/view_details.dart';
+import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -151,9 +151,9 @@ Widget orderCard(BuildContext context, Order order) {
                       child: RaisedButton(
                         color: Colors.deepPurpleAccent,
                         disabledColor:
-                        (ConstantVariables.order.indexOf(order.status) == 4)
-                            ? Colors.green
-                            : Colors.redAccent,
+                            (ConstantVariables.order.indexOf(order.status) == 4)
+                                ? Colors.green
+                                : Colors.redAccent,
                         onPressed: () {
                           checkStatusOnPressed(order);
                         },

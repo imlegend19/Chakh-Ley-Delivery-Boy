@@ -1,8 +1,8 @@
-import 'package:chakhle_delivery_boy/entity/order.dart';
-import 'package:chakhle_delivery_boy/entity/transaction.dart';
-import 'package:chakhle_delivery_boy/pages/transaction_page.dart';
-import 'package:chakhle_delivery_boy/utils/basic_details_card.dart';
-import 'package:chakhle_delivery_boy/utils/suborder.dart';
+import 'package:chakh_ley_delivery_boy/entity/order.dart';
+import 'package:chakh_ley_delivery_boy/entity/transaction.dart';
+import 'package:chakh_ley_delivery_boy/pages/transaction_page.dart';
+import 'package:chakh_ley_delivery_boy/utils/basic_details_card.dart';
+import 'package:chakh_ley_delivery_boy/utils/suborder.dart';
 import 'package:flutter/material.dart';
 
 class ViewDetails extends StatefulWidget {

@@ -1,10 +1,9 @@
-import 'dart:io';
-
-
-import 'package:chakhle_delivery_boy/entity/order.dart';
-import 'package:chakhle_delivery_boy/entity/transaction.dart';
-import 'package:chakhle_delivery_boy/pages/transaction_post_page.dart';
-import 'package:chakhle_delivery_boy/utils/transaction_saved_card.dart';
+import 'package:chakh_ley_delivery_boy/entity/order.dart';
+import 'package:chakh_ley_delivery_boy/entity/transaction.dart';
+import 'package:chakh_ley_delivery_boy/pages/transaction_post_page.dart';
+import 'package:chakh_ley_delivery_boy/utils/color_loader.dart';
+import 'package:chakh_ley_delivery_boy/utils/error_widget.dart';
+import 'package:chakh_ley_delivery_boy/utils/transaction_saved_card.dart';
 import 'package:flutter/material.dart';
 
 class TransactionPage extends StatefulWidget {
@@ -43,20 +42,29 @@ class _TransactionPageState extends State<TransactionPage> {
         ),
       ),
       body: FutureBuilder<GetTransactions>(
-          future: widget.transaction,
-          builder: (context, response) {
-            if (response.hasData) {
-              return ListView.builder(
-                itemCount: response.data.count,
-                itemBuilder: (BuildContext context, int index) {
-                  return transactionCard(
-                      context, response.data.transactions[index]);
-                },
-              );
-            } else {
-              return Container();
-            }
-          }),
+        future: widget.transaction,
+        builder: (context, response) {
+          if (response.hasData) {
+            return ListView.builder(
+              itemCount: response.data.count,
+              itemBuilder: (BuildContext context, int index) {
+                return transactionCard(
+                    context, response.data.transactions[index]);
+              },
+            );
+          } else if (response.hasError) {
+            return getErrorWidget(context);
+          } else {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Center(
+                child: ColorLoader(),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 
