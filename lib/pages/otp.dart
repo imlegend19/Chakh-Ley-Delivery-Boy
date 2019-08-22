@@ -165,7 +165,7 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
       assert(json is Map);
 
       String token = json["token"];
-      print(token);
+      // print(token);
       var decodedObject = parseJwt(token);
 
       Fluttertoast.showToast(

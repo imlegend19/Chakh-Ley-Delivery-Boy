@@ -1,6 +1,6 @@
+import 'dart:convert' as JSON;
 import 'dart:io';
 
-import 'dart:convert' as JSON;
 import 'package:chakh_ley_delivery_boy/entity/api_static.dart';
 import 'package:chakh_ley_delivery_boy/entity/order.dart';
 import 'package:chakh_ley_delivery_boy/entity/transaction_post.dart';

@@ -1,8 +1,10 @@
 import 'dart:async';
+
 import 'package:chakh_ley_delivery_boy/static_variables/no_internet.dart';
 import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+
 import 'fragments/order_station.dart';
 import 'models/user_pref.dart';
 

@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:convert' as JSON;
+import 'dart:io';
+
 import 'package:chakh_ley_delivery_boy/home_page.dart';
 import 'package:chakh_ley_delivery_boy/models/user_pref.dart';
 import 'package:chakh_ley_delivery_boy/pages/otp.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:sentry/sentry.dart';
+
 import 'entity/api_static.dart';
 import 'models/user_post.dart';
 
@@ -240,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
         _phnEnabled = true;
       });
     }).catchError((error) {
-      print('error : $error');
+      // print('error : $error');
     });
   }
 }

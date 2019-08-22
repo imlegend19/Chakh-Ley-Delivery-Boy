@@ -1,7 +1,9 @@
 import 'dart:convert';
+
 import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+
 import 'api_static.dart';
 
 class Order {
