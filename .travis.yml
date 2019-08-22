@@ -34,19 +34,19 @@ build: &build
   before_script:
     - export BUILD_NAME=$TRAVIS_TAG
     - export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
-  script:
-    - if [[ $TRAVIS_TAG == "" ]]; then flutter build apk; else flutter build apk --build-name $BUILD_NAME --build-number $BUILD_NUMBER; fi
-  deploy:
-    - provider: releases
-      api_key: "e2bfedea411f6d5e5997ef7b89f7d8752b4e6cc0"
-      file: build/app/outputs/apk/release/app-release.apk
-      skip_cleanup: true
-      name: $TRAVIS_TAG
-      on:
-        tags: true
-  after_deploy:
-    - git branch $TRAVIS_TAG
-    - git push https://e2bfedea411f6d5e5997ef7b89f7d8752b4e6cc0@github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_TAG
+#  script:
+#    - if [[ $TRAVIS_TAG == "" ]]; then flutter build apk; else flutter build apk --build-name $BUILD_NAME --build-number $BUILD_NUMBER; fi
+#  deploy:
+#    - provider: releases
+#      api_key: "e2bfedea411f6d5e5997ef7b89f7d8752b4e6cc0"
+#      file: build/app/outputs/apk/release/app-release.apk
+#      skip_cleanup: true
+#      name: $TRAVIS_TAG
+#      on:
+#        tags: true
+#  after_deploy:
+#    - git branch $TRAVIS_TAG
+#    - git push https://e2bfedea411f6d5e5997ef7b89f7d8752b4e6cc0@github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_TAG
 
 jobs:
   allow_failures:
