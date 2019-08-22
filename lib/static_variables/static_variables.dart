@@ -1,3 +1,5 @@
+import 'package:sentry/sentry.dart';
+
 class ConstantVariables {
   static int openRestaurantsCount;
 
@@ -56,4 +58,9 @@ class ConstantVariables {
     "D": "Delivered",
     "C": "Cancelled"
   };
+
+  static SentryClient sentryClient;
+
+  static var sentryDSN =
+      "https://5ba9055697584624a7b962a873362133:2261dd6f66014a21afe2db3a7522469c@sentry.io/1538282";
 }

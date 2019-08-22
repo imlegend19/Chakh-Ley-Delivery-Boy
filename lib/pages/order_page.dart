@@ -50,13 +50,19 @@ class _OrderPageState extends State<OrderPage> {
                   },
                 );
               } else {
-                return Center(
-                  child: Container(
+                return Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
                       child: Text(
-                        'No ${ConstantVariables.codeOrder[widget
-                            .status]} Orders Yet',
-                        style: TextStyle(fontSize: 30.0),
-                      )),
+                        'No ${ConstantVariables.codeOrder[widget.status]} Orders Yet',
+                        style: TextStyle(fontSize: 25.0),
+                        maxLines: 3,
+                      ),
+                    ),
+                  ),
                 );
               }
             } else {

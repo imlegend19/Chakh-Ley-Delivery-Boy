@@ -30,6 +30,7 @@ dependencies:
   pin_code_text_field:
   rounded_modal:
   flutter_launcher_icons:
+  sentry:
 
 dev_dependencies:
   flutter_test:

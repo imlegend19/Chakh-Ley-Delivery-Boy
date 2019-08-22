@@ -1,6 +1,6 @@
 import 'dart:io';
 
-
+import 'dart:convert' as JSON;
 import 'package:chakhle_delivery_boy/entity/api_static.dart';
 import 'package:chakhle_delivery_boy/entity/order.dart';
 import 'package:chakhle_delivery_boy/entity/transaction_post.dart';
@@ -209,7 +209,7 @@ class _TransactionPostPageState extends State<TransactionPostPage> {
         paymentMode: selectedMode,
         acceptedBy: widget.order.deliveryBoy["delivery_boy"]);
 
-    createPost(post).then((response) {
+    createPost(post).then((response) async {
       if (response.statusCode == 201) {
         patchOrder(
             widget.order.id,
@@ -222,21 +222,24 @@ class _TransactionPostPageState extends State<TransactionPostPage> {
           timeInSecForIos: 2,
         );
       } else if (response.statusCode == 400) {
-        // print(response.body);
+        var json = JSON.jsonDecode(response.body);
+        assert(json is Map);
+        Fluttertoast.showToast(
+          msg: json['detail'],
+          fontSize: 13.0,
+          toastLength: Toast.LENGTH_LONG,
+          timeInSecForIos: 2,
+        );
+        await ConstantVariables.sentryClient.captureException(
+          exception: Exception("Transaction Post Failure"),
+          stackTrace: '[post: $post, respanse.body: ${response.body}, '
+              'response.headers: ${response.headers}, response: $response]',
+        );
       }
-    }).catchError((Object error) {
-      Fluttertoast.showToast(
-        msg: "Please check your internet!",
-        fontSize: 13.0,
-        toastLength: Toast.LENGTH_LONG,
-        timeInSecForIos: 2,
-      );
-    }).catchError((error) {
-      Fluttertoast.showToast(
-        msg: error.toString(),
-        fontSize: 13.0,
-        toastLength: Toast.LENGTH_LONG,
-        timeInSecForIos: 2,
+    }).catchError((error) async {
+      await ConstantVariables.sentryClient.captureException(
+        exception: Exception("Transaction Post Failure Error"),
+        stackTrace: '[post: $post, error: ${error.toString()}]',
       );
     });
   }

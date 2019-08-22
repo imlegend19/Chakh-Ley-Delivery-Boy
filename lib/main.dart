@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:convert' as JSON;
 
@@ -8,11 +9,25 @@ import 'package:chakhle_delivery_boy/static_variables/static_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:sentry/sentry.dart';
 
 import 'entity/api_static.dart';
 import 'models/user_post.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  ConstantVariables.sentryClient =
+      SentryClient(dsn: ConstantVariables.sentryDSN);
+
+  runZoned(() async {
+    runApp(MyApp());
+  }, onError: (error, stackTrace) async {
+    // print(error);
+    await ConstantVariables.sentryClient.captureException(
+      exception: error,
+      stackTrace: stackTrace,
+    );
+  });
+}
 
 class MyApp extends StatelessWidget {
   @override
