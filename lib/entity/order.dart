@@ -11,7 +11,7 @@ class Order {
   final String name;
   final String mobile;
   final String email;
-  final Map<String, dynamic> restaurant;
+  final String restaurantName;
   final String preparationTime;
   final String status;
   final String orderDate;
@@ -26,7 +26,7 @@ class Order {
     this.name,
     this.mobile,
     this.email,
-    this.restaurant,
+    this.restaurantName,
     this.preparationTime,
     this.status,
     this.orderDate,
@@ -56,15 +56,15 @@ class GetOrders {
         Order(
           id: jsonOrder[APIStatic.keyID],
           name: jsonOrder[APIStatic.keyName],
-          mobile: jsonOrder[RestaurantStatic.keyMobile],
-          email: jsonOrder[RestaurantStatic.keyEmail],
-          restaurant: jsonOrder[RestaurantStatic.keyRestaurant],
+          mobile:jsonOrder[OrderStatic.keyMobile],
+          email: jsonOrder[OrderStatic.keyEmail],
+          restaurantName: jsonOrder[OrderStatic.keyRestaurantName],
           preparationTime: jsonOrder[OrderStatic.keyPreparationTime],
           status: jsonOrder[OrderStatic.keyStatus],
           orderDate: jsonOrder[OrderStatic.keyOrderDate],
           total: jsonOrder[OrderStatic.keyTotal],
           paymentDone: jsonOrder[OrderStatic.keyPaymentDone],
-          suborderSet: jsonOrder[OrderStatic.keySuborderSet],
+          suborderSet: jsonOrder[OrderStatic.keySubOrderSet],
           delivery: jsonOrder[OrderStatic.keyDelivery],
           deliveryBoy: jsonOrder[OrderStatic.keyDeliveryBoy],
         ),
