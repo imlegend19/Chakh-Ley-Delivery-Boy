@@ -207,7 +207,7 @@ class _TransactionPostPageState extends State<TransactionPostPage> {
         isCredit: true,
         paymentType: selectedType,
         paymentMode: selectedMode,
-        acceptedBy: widget.order.deliveryBoy);
+        acceptedBy: widget.order.deliveryBoy["id"]);
 
     createPost(post).then((response) async {
       if (response.statusCode == 201) {
