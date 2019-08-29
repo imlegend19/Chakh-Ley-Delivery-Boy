@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:http/http.dart' as http;
 
 import 'api_static.dart';
@@ -12,7 +11,7 @@ class Transaction {
   final bool isCredit;
   final String paymentType;
   final String paymentMode;
-  final Map<String,dynamic> acceptedBy;
+  final Map<String, dynamic> acceptedBy;
 
   Transaction(
       {this.id,
@@ -78,13 +77,6 @@ Future<GetTransactions> fetchTransactions(String orderID) async {
 
     return transactions;
   } else {
-    await ConstantVariables.sentryClient.captureException(
-      exception: Exception("Transaction Fetch Failure"),
-      stackTrace: '[orderID: $orderID, response.body: ${response.body}, '
-          'response.headers: ${response.headers}, response: $response,'
-          'status code: ${response.statusCode}]',
-    );
-
     return null;
   }
 }

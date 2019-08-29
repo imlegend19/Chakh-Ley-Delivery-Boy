@@ -1,5 +1,5 @@
 abstract class APIStatic {
-  static const baseURL = "http://adminbeta.chakhley.co.in/api/";
+  static const baseURL = "http://admin.chakhley.co.in/api/";
 
   static const keyID = "id";
   static const keyName = "name";
@@ -218,7 +218,6 @@ abstract class OrderStatic {
   static const keyDeliveryBoy = "delivery_boy";
 }
 
-
 abstract class TransactionStatic {
   ///  {
   ///      "id": 1,
@@ -238,7 +237,8 @@ abstract class TransactionStatic {
   ///    }
 
   static const transactionURL = APIStatic.baseURL + "transactions/list/?order=";
-  static const transactionCreateURL = APIStatic.baseURL + "transactions/create/";
+  static const transactionCreateURL =
+      APIStatic.baseURL + "transactions/create/";
   static const keyOrder = "order";
   static const keyAmount = "amount";
   static const keyIsCredit = "is_credit";

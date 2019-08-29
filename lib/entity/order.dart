@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
@@ -56,7 +55,7 @@ class GetOrders {
         Order(
           id: jsonOrder[APIStatic.keyID],
           name: jsonOrder[APIStatic.keyName],
-          mobile:jsonOrder[OrderStatic.keyMobile],
+          mobile: jsonOrder[OrderStatic.keyMobile],
           email: jsonOrder[OrderStatic.keyEmail],
           restaurantName: jsonOrder[OrderStatic.keyRestaurantName],
           preparationTime: jsonOrder[OrderStatic.keyPreparationTime],
@@ -102,22 +101,9 @@ Future<GetOrders> fetchOrderDeliveryBoy(String status, int deliveryBoy) async {
 
       return order;
     } else {
-      await ConstantVariables.sentryClient.captureException(
-        exception: Exception("Order Get Failure"),
-        stackTrace:
-            '[status: $status, deliveryBoy: $deliveryBoy, response.body: ${response.body}, '
-            'response.headers: ${response.headers}, response: $response,'
-            'status code: ${response.statusCode}]',
-      );
-
       return null;
     }
   } catch (e) {
-    await ConstantVariables.sentryClient.captureException(
-      exception: Exception("Retrieve Order Error"),
-      stackTrace: e.toString(),
-    );
-
     return null;
   }
 }
@@ -139,13 +125,6 @@ patchOrder(int id, String status) async {
       timeInSecForIos: 2,
     );
   } else if (response.statusCode == 503) {
-    await ConstantVariables.sentryClient.captureException(
-      exception: Exception("Order Patch Error"),
-      stackTrace: '[status: $status, id: $id, response.body: ${response.body}, '
-          'response.headers: ${response.headers}, response: $response,'
-          'status code: ${response.statusCode}]',
-    );
-
     Fluttertoast.showToast(
       msg: "Please check your internet!",
       fontSize: 13.0,
@@ -153,13 +132,6 @@ patchOrder(int id, String status) async {
       timeInSecForIos: 2,
     );
   } else {
-    await ConstantVariables.sentryClient.captureException(
-      exception: Exception("Order Patch Error"),
-      stackTrace: '[status: $status, id: $id, response.body: ${response.body}, '
-          'response.headers: ${response.headers}, response: $response,'
-          'status code: ${response.statusCode}]',
-    );
-
     Fluttertoast.showToast(
       msg: 'Error!!',
       fontSize: 13.0,

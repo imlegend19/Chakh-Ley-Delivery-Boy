@@ -41,8 +41,7 @@ Future<Null> _reportError(dynamic error, dynamic stackTrace) async {
   );
 }
 
-
-void main() async{
+void main() async {
   FlutterError.onError = (FlutterErrorDetails details) async {
     if (isInDebugMode) {
       FlutterError.dumpErrorToConsole(details);

@@ -146,14 +146,6 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
       var json = JSON.jsonDecode(response.body);
       assert(json is Map);
 
-      await ConstantVariables.sentryClient.captureException(
-        exception: Exception("Order Patch Error"),
-        stackTrace:
-            '[object: ${json['detail']}, response.body: ${response.body}, '
-            'response.headers: ${response.headers}, response: $response,'
-            'status code: ${response.statusCode}]',
-      );
-
       Fluttertoast.showToast(
         msg: json['detail'],
         fontSize: 13.0,
@@ -181,14 +173,6 @@ class _OTPBottomSheetState extends State<OTPBottomSheet> {
     } else {
       var json = JSON.jsonDecode(response.body);
       assert(json is Map);
-
-      await ConstantVariables.sentryClient.captureException(
-        exception: Exception("Order Patch Error"),
-        stackTrace:
-            '[object: ${json['detail']}, response.body: ${response.body}, '
-            'response.headers: ${response.headers}, response: $response,'
-            'status code: ${response.statusCode}]',
-      );
 
       Fluttertoast.showToast(
         msg: json['detail'],
