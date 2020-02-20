@@ -2,6 +2,7 @@ import 'package:chakh_ley_delivery_boy/entity/order.dart';
 import 'package:chakh_ley_delivery_boy/fragments/view_details.dart';
 import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Widget orderCard(BuildContext context, Order order) {
@@ -90,6 +91,34 @@ Widget orderCard(BuildContext context, Order order) {
                   ),
                   TextSpan(
                     text: '${order.total}',
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  fontFamily: 'Avenir-Bold',
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'Order Time: ',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '${DateFormat.Hms().format(DateTime.parse(order.orderDate).toLocal())}',
                     style: TextStyle(
                       color: Colors.grey.shade600,
                       fontWeight: FontWeight.w500,

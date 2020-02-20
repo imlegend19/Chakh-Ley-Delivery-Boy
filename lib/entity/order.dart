@@ -77,6 +77,7 @@ class GetOrders {
 }
 
 Future<GetOrders> fetchOrderDeliveryBoy(String status, int deliveryBoy) async {
+  print(status);
   try {
     final response = await http.get(OrderStatic.keyOrderListURL +
         status +

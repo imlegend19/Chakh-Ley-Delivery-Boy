@@ -11,7 +11,7 @@ class _OrderStationState extends State<OrderStation> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 0,
@@ -19,7 +19,6 @@ class _OrderStationState extends State<OrderStation> {
             tabs: [
               Tab(text: "Preparing"),
               Tab(text: "Ongoing"),
-              Tab(text: 'Delivered'),
             ],
             indicatorColor: Colors.white,
           ),
@@ -29,16 +28,13 @@ class _OrderStationState extends State<OrderStation> {
           children: [
             OrderPage(
               status: "Pr",
-              deliveryBoy: int.parse(ConstantVariables.user["id"]),
+              deliveryBoy: int.parse(ConstantVariables.user["id"])
+                  ,
             ),
             OrderPage(
-              status: "O",
-              deliveryBoy: int.parse(ConstantVariables.user["id"]),
-            ),
-            OrderPage(
-              status: 'D',
-              deliveryBoy: int.parse(ConstantVariables.user["id"]),
-            ),
+                status: "O",
+                deliveryBoy: int.parse(ConstantVariables.user["id"]) ,
+                    ),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chakh_ley_delivery_boy/pages/order_page.dart';
 import 'package:chakh_ley_delivery_boy/static_variables/no_internet.dart';
 import 'package:chakh_ley_delivery_boy/static_variables/static_variables.dart';
 import 'package:connectivity/connectivity.dart';
@@ -17,6 +18,7 @@ class DrawerItem {
 class HomePage extends StatefulWidget {
   final drawerItems = [
     DrawerItem("Delivery Boys", Icons.directions_bike),
+    DrawerItem("Delivered", Icons.airplanemode_active),
     DrawerItem("Logout", Icons.power_settings_new)
   ];
 
@@ -51,7 +53,13 @@ class _HomePageState extends State<HomePage> {
     switch (pos) {
       case 0:
         return OrderStation();
+        break;
       case 1:
+        return OrderPage(
+            status: 'D',
+            deliveryBoy: int.parse(ConstantVariables.user["id"]) ,
+                );
+      case 2:
         logoutUser().then((val) {
           Navigator.pushReplacementNamed(context, '/loginpage');
         });
@@ -123,7 +131,8 @@ class _HomePageState extends State<HomePage> {
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.grey[200],
                 ),
-                accountName: Text(ConstantVariables.user['name']),
+                accountName:
+                    Text(ConstantVariables.user['name'] ?? '---no name---'),
                 accountEmail: ConstantVariables.user['email'] == null
                     ? Text("-- no email provided --")
                     : Text(ConstantVariables.user['email'])),

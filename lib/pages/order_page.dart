@@ -7,6 +7,7 @@ import 'package:chakh_ley_delivery_boy/utils/error_widget.dart';
 import 'package:chakh_ley_delivery_boy/utils/order_card.dart';
 import 'package:flutter/material.dart';
 
+
 class OrderPage extends StatefulWidget {
   @override
   _OrderPageState createState() => _OrderPageState();
@@ -19,7 +20,6 @@ class OrderPage extends StatefulWidget {
 
 class _OrderPageState extends State<OrderPage> {
   StreamController _orderController;
-
   loadOrders() async {
     Future.sync(() {
       fetchOrderDeliveryBoy(widget.status, widget.deliveryBoy)
@@ -40,7 +40,10 @@ class _OrderPageState extends State<OrderPage> {
   void initState() {
     super.initState();
     _orderController = StreamController();
-    Timer.periodic(Duration(seconds: 3), (_) => loadOrders());
+    if (widget.status == 'Pr') {
+      Timer.periodic(Duration(seconds: 3), (_) => loadOrders());
+    } else
+      loadOrders();
   }
 
   @override
